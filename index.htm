@@ -1,0 +1,654 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GameHub | Free Games</title>
+
+<style>
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  background: #080912;
+  color: white;
+}
+
+header {
+  padding: 18px 6%;
+  background: #101221;
+  border-bottom: 1px solid #252944;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.logo {
+  font-size: 26px;
+  font-weight: bold;
+  color: #00e5ff;
+}
+
+.logo span {
+  color: #9c6cff;
+}
+
+nav a {
+  color: #ccc;
+  text-decoration: none;
+  margin-left: 20px;
+}
+
+nav a:hover {
+  color: #00e5ff;
+}
+
+.hero {
+  text-align: center;
+  padding: 75px 20px 50px;
+  background:
+    radial-gradient(circle at top left, #302060, transparent 40%),
+    radial-gradient(circle at top right, #064c5d, transparent 35%);
+}
+
+.hero h1 {
+  font-size: 65px;
+  margin-bottom: 15px;
+}
+
+.hero h1 span {
+  color: #00e5ff;
+}
+
+.hero p {
+  color: #aaa;
+  font-size: 18px;
+  margin-bottom: 30px;
+}
+
+.search {
+  width: min(650px, 90%);
+  padding: 17px 20px;
+  border-radius: 14px;
+  border: 1px solid #30354f;
+  background: #111426;
+  color: white;
+  font-size: 16px;
+  outline: none;
+}
+
+.search:focus {
+  border-color: #00e5ff;
+}
+
+.categories {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  padding: 25px 15px;
+  flex-wrap: wrap;
+}
+
+.categories button {
+  border: 0;
+  padding: 11px 18px;
+  border-radius: 30px;
+  background: #171a2b;
+  color: #aaa;
+  cursor: pointer;
+}
+
+.categories button:hover,
+.categories button.active {
+  background: #734cff;
+  color: white;
+}
+
+.container {
+  width: min(1150px, 90%);
+  margin: auto;
+  padding-bottom: 70px;
+}
+
+.title {
+  margin: 20px 0;
+  font-size: 28px;
+}
+
+.games {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+  gap: 18px;
+}
+
+.game {
+  background: #111426;
+  border: 1px solid #242840;
+  border-radius: 16px;
+  overflow: hidden;
+  transition: .2s;
+  position: relative;
+}
+
+.game:hover {
+  transform: translateY(-6px);
+  border-color: #734cff;
+}
+
+.game-icon {
+  height: 140px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 58px;
+  background: linear-gradient(135deg, #171d3b, #2b1e4b);
+}
+
+.game-info {
+  padding: 15px;
+}
+
+.game-info h3 {
+  margin-bottom: 7px;
+}
+
+.game-info p {
+  color: #888;
+  font-size: 13px;
+}
+
+.play {
+  display: block;
+  text-align: center;
+  margin-top: 13px;
+  padding: 10px;
+  background: #734cff;
+  border-radius: 9px;
+  color: white;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.play:hover {
+  background: #8b6aff;
+}
+
+.favorite {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 34px;
+  height: 34px;
+  border: 0;
+  border-radius: 50%;
+  background: #0009;
+  color: white;
+  cursor: pointer;
+  font-size: 18px;
+}
+
+.favorite.active {
+  color: #ff4081;
+}
+
+.banner {
+  margin: 55px 0;
+  padding: 35px;
+  border-radius: 20px;
+  background: linear-gradient(120deg, #28155b, #123c51);
+  text-align: center;
+}
+
+.banner h2 {
+  font-size: 32px;
+  margin-bottom: 10px;
+}
+
+.banner p {
+  color: #bbb;
+  margin-bottom: 22px;
+}
+
+.big-button {
+  display: inline-block;
+  padding: 13px 22px;
+  background: #00c9e8;
+  color: #061018;
+  font-weight: bold;
+  border-radius: 10px;
+  text-decoration: none;
+  margin: 5px;
+}
+
+.big-button:hover {
+  background: white;
+}
+
+footer {
+  text-align: center;
+  padding: 30px;
+  border-top: 1px solid #242840;
+  color: #777;
+}
+
+@media(max-width: 650px) {
+  .hero h1 {
+    font-size: 43px;
+  }
+
+  nav a {
+    display: none;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <div class="logo">GAME<span>HUB</span></div>
+
+  <nav>
+    <a href="#games">Games</a>
+    <a href="#categories">Categories</a>
+    <a href="#more">More Games</a>
+  </nav>
+</header>
+
+<section class="hero">
+
+  <h1>PLAY <span>ANYTHING.</span></h1>
+
+  <p>
+    Free browser games. No downloads. Just play.
+  </p>
+
+  <input
+    class="search"
+    id="search"
+    type="text"
+    placeholder="🔎 Search games..."
+    oninput="searchGames()"
+  >
+
+</section>
+
+<div class="categories" id="categories">
+
+  <button class="active" onclick="filterGames('all', this)">
+    🔥 All
+  </button>
+
+  <button onclick="filterGames('action', this)">
+    ⚔️ Action
+  </button>
+
+  <button onclick="filterGames('racing', this)">
+    🏎️ Racing
+  </button>
+
+  <button onclick="filterGames('sports', this)">
+    ⚽ Sports
+  </button>
+
+  <button onclick="filterGames('puzzle', this)">
+    🧩 Puzzle
+  </button>
+
+  <button onclick="filterGames('multiplayer', this)">
+    👥 Multiplayer
+  </button>
+
+</div>
+
+<main class="container">
+
+<h2 class="title" id="games">🔥 Popular Games</h2>
+
+<div class="games">
+
+  <article class="game"
+    data-category="racing"
+    data-name="Drive Mad">
+
+    <button class="favorite" onclick="favorite(this)">♡</button>
+
+    <div class="game-icon">🏎️</div>
+
+    <div class="game-info">
+      <h3>Drive Mad</h3>
+      <p>Racing • Skill</p>
+
+      <a
+        class="play"
+        href="https://poki.com/en/g/drive-mad"
+        target="_blank">
+        PLAY →
+      </a>
+    </div>
+
+  </article>
+
+
+  <article class="game"
+    data-category="action"
+    data-name="Level Devil">
+
+    <button class="favorite" onclick="favorite(this)">♡</button>
+
+    <div class="game-icon">😈</div>
+
+    <div class="game-info">
+      <h3>Level Devil</h3>
+      <p>Action • Platform</p>
+
+      <a
+        class="play"
+        href="https://poki.com/en/g/level-devil"
+        target="_blank">
+        PLAY →
+      </a>
+    </div>
+
+  </article>
+
+
+  <article class="game"
+    data-category="action"
+    data-name="Stickman Hook">
+
+    <button class="favorite" onclick="favorite(this)">♡</button>
+
+    <div class="game-icon">🕷️</div>
+
+    <div class="game-info">
+      <h3>Stickman Hook</h3>
+      <p>Action • Skill</p>
+
+      <a
+        class="play"
+        href="https://poki.com/en/g/stickman-hook"
+        target="_blank">
+        PLAY →
+      </a>
+    </div>
+
+  </article>
+
+
+  <article class="game"
+    data-category="multiplayer"
+    data-name="Smash Karts">
+
+    <button class="favorite" onclick="favorite(this)">♡</button>
+
+    <div class="game-icon">💥</div>
+
+    <div class="game-info">
+      <h3>Smash Karts</h3>
+      <p>Multiplayer • Racing</p>
+
+      <a
+        class="play"
+        href="https://poki.com/en/g/smash-karts"
+        target="_blank">
+        PLAY →
+      </a>
+    </div>
+
+  </article>
+
+
+  <article class="game"
+    data-category="sports"
+    data-name="Retro Bowl">
+
+    <button class="favorite" onclick="favorite(this)">♡</button>
+
+    <div class="game-icon">🏈</div>
+
+    <div class="game-info">
+      <h3>Retro Bowl</h3>
+      <p>Sports • Football</p>
+
+      <a
+        class="play"
+        href="https://poki.com/en/g/retro-bowl"
+        target="_blank">
+        PLAY →
+      </a>
+    </div>
+
+  </article>
+
+
+  <article class="game"
+    data-category="racing"
+    data-name="Moto X3M">
+
+    <button class="favorite" onclick="favorite(this)">♡</button>
+
+    <div class="game-icon">🏍️</div>
+
+    <div class="game-info">
+      <h3>Moto X3M</h3>
+      <p>Racing • Stunts</p>
+
+      <a
+        class="play"
+        href="https://poki.com/en/g/moto-x3m"
+        target="_blank">
+        PLAY →
+      </a>
+    </div>
+
+  </article>
+
+
+  <article class="game"
+    data-category="action"
+    data-name="Subway Surfers">
+
+    <button class="favorite" onclick="favorite(this)">♡</button>
+
+    <div class="game-icon">🚆</div>
+
+    <div class="game-info">
+      <h3>Subway Surfers</h3>
+      <p>Action • Runner</p>
+
+      <a
+        class="play"
+        href="https://poki.com/en/g/subway-surfers"
+        target="_blank">
+        PLAY →
+      </a>
+    </div>
+
+  </article>
+
+
+  <article class="game"
+    data-category="puzzle"
+    data-name="2048">
+
+    <button class="favorite" onclick="favorite(this)">♡</button>
+
+    <div class="game-icon">🔢</div>
+
+    <div class="game-info">
+      <h3>2048</h3>
+      <p>Puzzle • Brain</p>
+
+      <a
+        class="play"
+        href="https://poki.com/"
+        target="_blank">
+        PLAY →
+      </a>
+    </div>
+
+  </article>
+
+
+  <article class="game"
+    data-category="sports"
+    data-name="Basketball Stars">
+
+    <button class="favorite" onclick="favorite(this)">♡</button>
+
+    <div class="game-icon">🏀</div>
+
+    <div class="game-info">
+      <h3>Basketball Stars</h3>
+      <p>Sports • Basketball</p>
+
+      <a
+        class="play"
+        href="https://poki.com/"
+        target="_blank">
+        PLAY →
+      </a>
+    </div>
+
+  </article>
+
+
+  <article class="game"
+    data-category="action"
+    data-name="Ragdoll Hit">
+
+    <button class="favorite" onclick="favorite(this)">♡</button>
+
+    <div class="game-icon">🥊</div>
+
+    <div class="game-info">
+      <h3>Ragdoll Hit</h3>
+      <p>Action • Fighting</p>
+
+      <a
+        class="play"
+        href="https://poki.com/"
+        target="_blank">
+        PLAY →
+      </a>
+    </div>
+
+  </article>
+
+</div>
+
+
+<section class="banner" id="more">
+
+  <h2>🎮 WANT MORE GAMES?</h2>
+
+  <p>
+    Explore thousands of free browser games on these gaming sites.
+  </p>
+
+  <a
+    class="big-button"
+    href="https://poki.com/"
+    target="_blank">
+    PLAY ON POKI →
+  </a>
+
+  <a
+    class="big-button"
+    href="https://maddox.games/"
+    target="_blank">
+    PLAY ON MADDOX →
+  </a>
+
+</section>
+
+</main>
+
+<footer>
+  GAMEHUB © 2026
+  <br><br>
+  Free browser gaming portal. GameHub is independent and
+  is not affiliated with Poki or Maddox Games.
+</footer>
+
+
+<script>
+
+function filterGames(category, button) {
+
+  document
+    .querySelectorAll(".categories button")
+    .forEach(btn => btn.classList.remove("active"));
+
+  button.classList.add("active");
+
+  document
+    .querySelectorAll(".game")
+    .forEach(game => {
+
+      if (
+        category === "all" ||
+        game.dataset.category === category
+      ) {
+        game.style.display = "";
+      } else {
+        game.style.display = "none";
+      }
+
+    });
+
+}
+
+
+function searchGames() {
+
+  const search =
+    document
+      .getElementById("search")
+      .value
+      .toLowerCase();
+
+  document
+    .querySelectorAll(".game")
+    .forEach(game => {
+
+      const name =
+        game.dataset.name.toLowerCase();
+
+      if (name.includes(search)) {
+        game.style.display = "";
+      } else {
+        game.style.display = "none";
+      }
+
+    });
+
+}
+
+
+function favorite(button) {
+
+  button.classList.toggle("active");
+
+  if (button.classList.contains("active")) {
+    button.innerHTML = "♥";
+  } else {
+    button.innerHTML = "♡";
+  }
+
+}
+
+</script>
+
+</body>
+</html>
+```
